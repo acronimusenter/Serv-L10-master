@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dane Do Bazy Pogodovo</title>
+</head>
+<body>
+<div>
+	<h3><b> Parametry Pogodowe </b></h3>
+    <label for="streetName">City Name:</label><br>
+    <input type="text" id="streetName" name="streetName" placeholder="Street Name..." required><br>
+    <label for="allLamps">Temp on hour 1:</label><br>
+    <input type="number" id="allLamps" name="allLamps" placeholder="All Lamps Numer..." required><br>
+    <label for="allLamps">Temp on hour 2:</label><br>
+    <input type="number" id="allLamps" name="allLamps" placeholder="All Lamps Numer..." required><br>
+    <label for="allLamps">Temp on hour 3:</label><br>
+    <input type="number" id="allLamps" name="allLamps" placeholder="All Lamps Numer..." required><br>
+    <label for="allLamps">Temp on hour 4:</label><br>
+    <input type="number" id="allLamps" name="allLamps" placeholder="All Lamps Numer..." required><br>
+    <label for="allLamps">Temp on hour 5:</label><br>
+    <input type="number" id="allLamps" name="allLamps" placeholder="All Lamps Numer..." required><br>
+    <label for="allLamps">Temp on hour 6:</label><br>
+    <input type="number" id="allLamps" name="allLamps" placeholder="All Lamps Numer..." required><br>
+    <label for="workingLamps">Hummadity:</label><br>
+    <input type="number" id="workingLamps" name="workingLamps" placeholder="Hummadity..." required><br>
+    <label for="workingLamps">Temperature:</label><br>
+    <input type="number" id="workingLamps" name="workingLamps" placeholder="Temperature..." required><br>
+    <label for="workingLamps">Pressure:</label><br>
+    <input type="number" id="workingLamps" name="workingLamps" placeholder="Pressure..." required><br>
+    <label for="workingLamps">Rain:</label><br>
+    <input type="number" id="workingLamps" name="workingLamps" placeholder="Rain..." required><br>
+    <label for="workingLamps">Direction of Wind:</label><br>
+    <input type="number" id="workingLamps" name="workingLamps" placeholder="Direction of Wind..." required><br>
+    <label for="workingLamps">Date:</label><br>
+    <input type="number" id="workingLamps" name="workingLamps" placeholder="Date..." required><br>
+    <label for="workingLamps">Sun:</label><br>
+    <input type="number" id="workingLamps" name="workingLamps" placeholder="Sun..." required><br>
+    <label for="workingLamps">Sun1:</label><br>
+    <input type="number" id="workingLamps" name="workingLamps" placeholder="Sun1" required><br>
+    <label for="workingLamps">Air Pollution Quality:</label><br>
+    <input type="number" id="workingLamps" name="workingLamps" placeholder="Air Pollution Quality..." required><br>
+    <button class="send">Send</button>
+</div>
+
+
+
+</body>
+
+<script>
+
+    let streetName = document.querySelector('#streetName');
+    let allLamps = document.querySelector('#allLamps');
+    let workingLamps = document.querySelector('#workingLamps');
+    let info = document.querySelector('.info');
+    let send = document.querySelector('.send');
+	
+
+    clear();
+
+    send.addEventListener('click', action);
+	
+
+    function clear() {
+        streetName.value = null;
+        allLamps.value = null;
+        workingLamps.value = null;
+		temp.value = null;
+		humidity.value = null;
+		pressure.value = null;
+		date.value = null;
+		statusAir.value = null;
+		name.value = null;
+		workers.value = null;
+		orders.value = null;
+		traffic.value = null;
+    }
+
+    function action() {
+        let street = streetName.value;
+        let aLamps = allLamps.value;
+        let wLamps = workingLamps.value;
+
+        if (!street || !aLamps || !wLamps) {
+            info.innerHTML = "Musisz uzupełnić wszystkie dane";
+        } else {
+            info.innerHTML = '';
+            let data = {
+                streetName: street,
+                allLamps: aLamps,
+                workingLamps: wLamps
+            }
+
+            fetch('http://localhost:3001/api/pogodovo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+
+            clear();
+        }
+    }
+
+	
+	
+</script>
+
+
+</html>
